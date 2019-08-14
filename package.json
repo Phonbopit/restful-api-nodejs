@@ -4,7 +4,8 @@
   "description": "Example of RESTful API with Node.js + MongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "format": "./node_modules/.bin/prettier --write server.js"
   },
   "keywords": [
     "RESTFul",
@@ -15,5 +16,13 @@
     "Express.js"
   ],
   "author": "Chai Phonbopit",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.9"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
 }
