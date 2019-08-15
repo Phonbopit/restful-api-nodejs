@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const Product = require('./models/product')
 
 const MONGODB_URI = process.env.MONGODB_URI
+const PORT = process.env.PORT || 9000
+
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
 
 mongoose.connection.on('error', err => {
@@ -45,6 +47,6 @@ app.delete('/products/:id', async (req, res) => {
   res.status(204).end()
 })
 
-app.listen(9000, () => {
-  console.log('Application is running on port 9000')
+app.listen(PORT, () => {
+  console.log(`Application is running on port ${PORT}`)
 })
