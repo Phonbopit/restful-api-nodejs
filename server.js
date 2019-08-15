@@ -3,7 +3,8 @@ const app = express()
 const mongoose = require('mongoose')
 const Product = require('./models/product')
 
-mongoose.connect('mongodb://localhost:27017/node-api-101', { useNewUrlParser: true })
+const MONGODB_URI = process.env.MONGODB_URI
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
 
 mongoose.connection.on('error', err => {
   console.error('MongoDB error', err)
