@@ -1,48 +1,47 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+const Product = require('./models/product')
 
+mongoose.connect('mongodb://localhost:27017/node-api-101', { useNewUrlParser: true })
 
-// mock data
-const products = [{
-  id: '1001',
-  name: 'Node.js for Beginners',
-  category: 'Node',
-  price: 990
-}, {
-  id: '1002',
-  name: 'React 101',
-  category: 'React',
-  price: 3990
-}, {
-  id: '1003',
-  name: 'Getting started with MongoDB',
-  category: 'MongoDB',
-  price: 1990
-}]
+mongoose.connection.on('error', err => {
+  console.error('MongoDB error', err)
+})
 
-app.get('/products', (req, res) => {
+app.use(express.json())
+
+app.get('/products', async (req, res) => {
+  const products = await Product.find({})
   res.json(products)
 })
 
-app.get('/products/:id', (req, res) => {
+app.get('/products/:id', async (req, res) => {
   const { id } = req.params
-  const result = products.find(product => product.id === id)
-  res.json(result)
+  const product = await Product.findById(id)
+  res.json(product)
 })
 
-app.post('/products', (req, res) => {
+app.post('/products', async (req, res) => {
   const payload = req.body
-  res.json(payload)
+  const product = new Product(payload)
+  await product.save()
+  res.status(201).end()
 })
 
-app.put('/products/:id', (req, res) => {
+app.put('/products/:id', async (req, res) => {
+  const payload = req.body
   const { id } = req.params
-  res.json({ id })
+
+  const product = await Product.findByIdAndUpdate(id, { $set: payload })
+  res.json(product)
 })
 
-app.delete('/products/:id', (req, res) => {
+app.delete('/products/:id', async (req, res) => {
   const { id } = req.params
-  res.json({ id })
+
+  await Product.findByIdAndDelete(id)
+  res.status(204).end()
 })
 
 app.listen(9000, () => {
