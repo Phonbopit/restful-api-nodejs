@@ -5,7 +5,8 @@ Example RESTFul API with Node.js
 
 ## Demo
 
-https://node-api-101.herokuapp.com/
+* [GET /products](https://node-api-101.herokuapp.com/products)
+* [GET /products/:id](https://node-api-101.herokuapp.com/products/:id)
 
 ## Usage
 
